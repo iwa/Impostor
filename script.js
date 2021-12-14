@@ -33,41 +33,15 @@ async function parseAddressAsync(serverAddress) {
     throw Error(message);
 }
 
-function parseForm() {
+async function downloadAsync() {
     const serverAddress = document.getElementById("address").value;
     const serverPort = document.getElementById("port").value ?? DEFAULT_PORT;
     const serverName = document.getElementById("name").value || "Impostor";
 
-    return [serverAddress, serverPort, serverName];
-}
-
-async function downloadAsync() {
-    const [serverAddress, serverPort, serverName] = parseForm();
     const [serverIp, serverFqdn] = await parseAddressAsync(serverAddress);
-
-    const json = generateRegionInfo(
-        serverName,
-        serverIp,
-        serverFqdn,
-        serverPort
-    );
-    const blob = new Blob([json], { type: "text/plain" });
+    const json = generateRegionInfo(serverName, serverIp, serverFqdn, serverPort);
+    const blob = new Blob([json], {type: "text/plain"});
     saveFile(blob, "regionInfo.json");
-
-    return false;
-}
-
-async function openApp() {
-    const [serveraddress, serverport, servername] = parseForm();
-    const [serverip, _] = await parseAddressAsync(serveraddress);
-
-    const params = new URLSearchParams({
-        servername,
-        serverport,
-        serverip,
-    });
-    const url = `amongus://init?${params.toString()}`;
-    window.location = url;
 
     return false;
 }
@@ -75,9 +49,7 @@ async function openApp() {
 let currentPlatform;
 
 function setEnabled(platform, value) {
-    for (const e of document.querySelectorAll(`.${platform}-support`)) {
-        e.style.display = value ? "block" : "none";
-    }
+    document.querySelector(`.${platform}-support`).style.display = value ? "block" : "none";
 }
 
 function setPlatform(platform) {
