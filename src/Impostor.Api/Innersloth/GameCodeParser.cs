@@ -61,26 +61,13 @@ namespace Impostor.Api.Innersloth
                 throw new ArgumentException("should be 4 or 6", nameof(len));
             }
 
-            // Generate random bytes.
-#if NETSTANDARD2_0
-            var data = new byte[len];
-#else
-            Span<byte> data = stackalloc byte[len];
-#endif
-            Random.GetBytes(data);
+            string[] codes = { "CLEBAR", "BATARD", "BUREAU", "DIMPDD", "UNROUF", "PIIIKA", "FUFUFU", "FOUFOU" };
 
-            // Convert to their char representation.
-            Span<char> dataChar = stackalloc char[len];
-            for (var i = 0; i < len; i++)
-            {
-                dataChar[i] = V2[V2Map[data[i] % 26]];
-            }
+            var random = new Random();
+            var index = random.Next(0, codes.Length);
+            var code = codes[index];
 
-#if NETSTANDARD2_0
-            return GameNameToInt(new string(dataChar.ToArray()));
-#else
-            return GameNameToInt(new string(dataChar));
-#endif
+            return GameNameToInt(new string(code));
         }
 
         private static string IntToGameNameV2(int input)
