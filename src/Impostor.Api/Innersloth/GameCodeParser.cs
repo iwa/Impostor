@@ -64,7 +64,7 @@ namespace Impostor.Api.Innersloth
             string[] codes = { "CLEBAR", "BATARD", "BUREAU", "DIMPDD", "UNROUF",
                 "PIIIKA", "FUFUFU", "FOUFOU", "GROSPD", "XMIMIE", "SANJII", "KIHOUU",
                 "PSOPSO", "ARLKNG", "LISOUH", "NUGGET", "LAZURI", "JOJOJO", "ZEMZEM",
-                "WATSON", "FLEXYY" };
+                "WATSON", "FLEXYY", "PDPDPD" };
 
             var random = new Random();
             var index = random.Next(0, codes.Length);
